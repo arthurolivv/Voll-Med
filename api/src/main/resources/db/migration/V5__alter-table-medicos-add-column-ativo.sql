@@ -1,0 +1,5 @@
+ALTER TABLE medicos ADD COLUMN ativo BOOLEAN DEFAULT true;
+
+UPDATE medicos SET ativo = true WHERE ativo IS NULL;
+
+ALTER TABLE medicos ALTER COLUMN ativo SET NOT NULL;
