@@ -1,6 +1,6 @@
 # 🏥 API Voll-Med
 
-Projeto desenvolvido durante meus estudos na **Alura**, simulando o sistema de um hospital fictício.  
+Projeto desenvolvido durante meus estudos na **Alura**, simulando o sistema de uma clínica médica fictícia.  
 A aplicação implementa um **CRUD para médicos e pacientes**, utilizando **Java 21, Spring Boot 3, PostgreSQL e Docker**.
 
 ---
