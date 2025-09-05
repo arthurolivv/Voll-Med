@@ -1,10 +1,10 @@
-package med.voli.api.medicos;
+package med.voli.api.domain.medicos;
 
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.*;
-import med.voli.api.endereco.Endereco;
+import med.voli.api.domain.endereco.Endereco;
 
 @Table(name = "medicos")
 @Entity(name = "Medico")

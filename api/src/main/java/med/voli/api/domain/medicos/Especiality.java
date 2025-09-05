@@ -1,4 +1,4 @@
-package med.voli.api.medicos;
+package med.voli.api.domain.medicos;
 
 public enum Especiality {
     ORTOPEDIA,

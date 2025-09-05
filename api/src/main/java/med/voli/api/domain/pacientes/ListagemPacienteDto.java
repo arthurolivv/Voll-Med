@@ -1,4 +1,4 @@
-package med.voli.api.pacientes;
+package med.voli.api.domain.pacientes;
 
 public record ListagemPacienteDto(String nome, String email, String cpf) {
 

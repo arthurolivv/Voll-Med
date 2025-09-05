@@ -1,4 +1,4 @@
-package med.voli.api.endereco;
+package med.voli.api.domain.endereco;
 
 public enum Uf {
     AC, // Acre
