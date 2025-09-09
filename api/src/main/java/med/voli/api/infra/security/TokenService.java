@@ -1,8 +1,11 @@
 package med.voli.api.infra.security;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import med.voli.api.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,25 @@ public class TokenService {
         } catch (JWTCreationException exception){
             // Invalid Signing configuration / Couldn't convert Claims.
             throw new RuntimeException("Erro ao gerar token jwt!",  exception);
+        }
+    }
+
+    public String getSubject(String tokenJWT){
+        //verifica e devolve apenas o usuario armazenado no token
+        try {
+            var algoritmo = Algorithm.HMAC256(secret);
+            return JWT.require(algoritmo)
+                    // specify any specific claim validations
+                    .withIssuer("API Voll.Med")
+                    // reusable verifier instance
+                    .build()
+                    .verify(tokenJWT)
+                    .getSubject();
+
+            //decodedJWT = verifier.verify(token);
+        } catch (JWTVerificationException exception){
+            // Invalid signature/claims
+            throw new RuntimeException("Token JWT invalido ou expirado");
         }
     }
 
