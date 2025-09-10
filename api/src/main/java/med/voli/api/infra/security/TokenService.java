@@ -43,7 +43,7 @@ public class TokenService {
             var algoritmo = Algorithm.HMAC256(secret);
             return JWT.require(algoritmo)
                     // specify any specific claim validations
-                    .withIssuer("API Voll.Med")
+                    .withIssuer("API Voll.med")
                     // reusable verifier instance
                     .build()
                     .verify(tokenJWT)
@@ -52,11 +52,15 @@ public class TokenService {
             //decodedJWT = verifier.verify(token);
         } catch (JWTVerificationException exception){
             // Invalid signature/claims
-            throw new RuntimeException("Token JWT invalido ou expirado");
+            throw new RuntimeException("Token JWT invalido ou expirado: " + tokenJWT);
         }
     }
 
     private Instant dataExpiracao() {
+
+        var expiration = LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-0300"));
+        System.out.println("Token expira em: " + expiration);
+
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-0300"));
     }
 }
