@@ -18,7 +18,7 @@ public record DadosAgendamentoConsultaDto(
         @NotNull
         @Future
         @JsonAlias({"data_consulta", "data_da_consulta"}) //apelido para usar o Json
-        @JsonFormat(pattern = "dd/MM/yyyy HH:mm") //formtar o horario
+        @JsonFormat(pattern = "dd/MM/yyyy HH:mm") //formatar o horario
         LocalDateTime data,
 
         Especiality especialidade

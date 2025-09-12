@@ -8,6 +8,8 @@ import med.voli.api.usuario.DadosAutenticacaoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class AgendamentoDeConsultas {
 
@@ -35,8 +37,26 @@ public class AgendamentoDeConsultas {
         var medico = escolherMedico(dadosAgendamentoConsultaDto);
         var paciente = pacienteRepository.getReferenceById(dadosAgendamentoConsultaDto.idPaciente());
 
-        var consulta = new Consulta(null, medico, paciente, dadosAgendamentoConsultaDto.data());
+        var consulta = new Consulta(null, medico, paciente, dadosAgendamentoConsultaDto.data(), null);
         consultaRepository.save(consulta);
+    }
+
+    public void cancelar(DadosCancelamentoConsultaDto dadosCancelamentoConsultaDto) {
+
+        if(!consultaRepository.existsById(dadosCancelamentoConsultaDto.idConsulta())){
+            throw new ValidacaoException("Id da consulta informada não existe!");
+        }
+
+        if(dadosCancelamentoConsultaDto.motivo() == null){
+            throw new ValidacaoException("O preenchimento do campo 'Motivo' é obrigatório");
+        }
+
+        if(!verificarAntedecendia24Horas(dadosCancelamentoConsultaDto)){
+            throw new ValidacaoException("A consulta só pode ser cancelada com no mínimo 24 horas de antecedência!");
+        }
+
+        var consulta = consultaRepository.getReferenceById(dadosCancelamentoConsultaDto.idConsulta());
+        consulta.cancelar(dadosCancelamentoConsultaDto.motivo());
     }
 
     private Medico escolherMedico(DadosAgendamentoConsultaDto dadosAgendamentoConsultaDto) {
@@ -49,5 +69,15 @@ public class AgendamentoDeConsultas {
         }
 
         return medicoRepository.escolherMedicoAleatorioLivreNaData(dadosAgendamentoConsultaDto.especialidade(), dadosAgendamentoConsultaDto.data());
+    }
+
+    private boolean verificarAntedecendia24Horas(DadosCancelamentoConsultaDto dadosCancelamentoConsultaDto) {
+
+        var consulta = consultaRepository.getReferenceById(dadosCancelamentoConsultaDto.idConsulta());
+
+        if(consulta.getData().isAfter(LocalDateTime.now().plusHours(24))){
+            return false;
+        }
+        return true;
     }
 }
