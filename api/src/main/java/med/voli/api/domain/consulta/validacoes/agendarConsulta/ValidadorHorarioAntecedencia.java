@@ -1,15 +1,15 @@
-package med.voli.api.domain.consulta.validacoes;
+package med.voli.api.domain.consulta.validacoes.agendarConsulta;
 
 import med.voli.api.domain.ValidacaoException;
 import med.voli.api.domain.consulta.DadosAgendamentoConsultaDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import med.voli.api.domain.consulta.validacoes.ValidadorAgendamentoDeConsulta;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Component
-public class ValidadorHorarioAntecedencia implements ValidadorAgendamentoDeConsulta{
+public class ValidadorHorarioAntecedencia implements ValidadorAgendamentoDeConsulta {
 
     public void validar(DadosAgendamentoConsultaDto dadosAgendamentoConsultaDto){
 

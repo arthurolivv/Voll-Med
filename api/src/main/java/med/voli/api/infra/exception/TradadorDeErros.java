@@ -1,6 +1,7 @@
 package med.voli.api.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import med.voli.api.domain.ValidacaoException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,6 +21,11 @@ public class TradadorDeErros {
     public ResponseEntity tratarErro400(MethodArgumentNotValidException exceptionRecebida){
         var erros = exceptionRecebida.getFieldErrors(); //pega e armazena a lista de erros que aconteceram na exception
         return ResponseEntity.badRequest().body(erros.stream().map(DadosErroValidacaoDto::new).toList());
+    }
+
+    @ExceptionHandler(ValidacaoException.class)
+    public ResponseEntity tratarErroRegraDeNegocio(ValidacaoException exceptionRecebida){
+        return ResponseEntity.badRequest().body(exceptionRecebida.getMessage());
     }
 
     private record DadosErroValidacaoDto(String campo, String mensagem){

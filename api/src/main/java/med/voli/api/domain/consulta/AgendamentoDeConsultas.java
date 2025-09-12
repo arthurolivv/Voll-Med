@@ -27,7 +27,7 @@ public class AgendamentoDeConsultas {
     @Autowired
     private List<ValidadorAgendamentoDeConsulta> validadores;
 
-    public void agendar(DadosAgendamentoConsultaDto dadosAgendamentoConsultaDto) {
+    public DadosDetalhamentoConsultaDto agendar(DadosAgendamentoConsultaDto dadosAgendamentoConsultaDto) {
 
         //verificar se medico existe
         if(dadosAgendamentoConsultaDto.idMedico() != null && !medicoRepository.existsById(dadosAgendamentoConsultaDto.idMedico())){
@@ -45,6 +45,8 @@ public class AgendamentoDeConsultas {
 
         var consulta = new Consulta(null, medico, paciente, dadosAgendamentoConsultaDto.data(), null);
         consultaRepository.save(consulta);
+        return new DadosDetalhamentoConsultaDto(consulta);
+
     }
 
     public void cancelar(DadosCancelamentoConsultaDto dadosCancelamentoConsultaDto) {
@@ -70,7 +72,7 @@ public class AgendamentoDeConsultas {
         if(dadosAgendamentoConsultaDto.idMedico() != null){
             return medicoRepository.getReferenceById(dadosAgendamentoConsultaDto.idMedico());
         }
-        if(dadosAgendamentoConsultaDto.idMedico() == null){
+        if(dadosAgendamentoConsultaDto.especialidade() == null){
             throw new ValidacaoException("O campo 'especialidade' é obrigatória quando o médico não for escolhido!");
         }
 

@@ -1,14 +1,14 @@
-package med.voli.api.domain.consulta.validacoes;
+package med.voli.api.domain.consulta.validacoes.agendarConsulta;
 
 import med.voli.api.domain.ValidacaoException;
 import med.voli.api.domain.consulta.ConsultaRepository;
 import med.voli.api.domain.consulta.DadosAgendamentoConsultaDto;
-import med.voli.api.domain.pacientes.PacienteRepository;
+import med.voli.api.domain.consulta.validacoes.ValidadorAgendamentoDeConsulta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component //componente generico
-public class ValidadorPacienteSemOutraConsulta implements ValidadorAgendamentoDeConsulta{
+public class ValidadorPacienteSemOutraConsulta implements ValidadorAgendamentoDeConsulta {
 
     @Autowired
     private ConsultaRepository consultaRepository;
