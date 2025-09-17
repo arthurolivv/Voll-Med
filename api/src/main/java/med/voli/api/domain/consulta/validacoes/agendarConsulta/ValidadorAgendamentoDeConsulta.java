@@ -1,4 +1,4 @@
-package med.voli.api.domain.consulta.validacoes;
+package med.voli.api.domain.consulta.validacoes.agendarConsulta;
 
 import med.voli.api.domain.consulta.DadosAgendamentoConsultaDto;
 

@@ -1,15 +1,14 @@
 package med.voli.api.domain.consulta;
 
 import med.voli.api.domain.ValidacaoException;
-import med.voli.api.domain.consulta.validacoes.ValidadorAgendamentoDeConsulta;
-import med.voli.api.domain.consulta.validacoes.ValidadorCancelamentoDeConsulta;
+import med.voli.api.domain.consulta.validacoes.agendarConsulta.ValidadorAgendamentoDeConsulta;
+import med.voli.api.domain.consulta.validacoes.CancelarConsulta.ValidadorCancelamentoDeConsulta;
 import med.voli.api.domain.medicos.Medico;
 import med.voli.api.domain.medicos.MedicoRepository;
 import med.voli.api.domain.pacientes.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service

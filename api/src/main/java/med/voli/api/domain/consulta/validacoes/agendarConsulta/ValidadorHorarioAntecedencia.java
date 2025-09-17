@@ -2,7 +2,6 @@ package med.voli.api.domain.consulta.validacoes.agendarConsulta;
 
 import med.voli.api.domain.ValidacaoException;
 import med.voli.api.domain.consulta.DadosAgendamentoConsultaDto;
-import med.voli.api.domain.consulta.validacoes.ValidadorAgendamentoDeConsulta;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
