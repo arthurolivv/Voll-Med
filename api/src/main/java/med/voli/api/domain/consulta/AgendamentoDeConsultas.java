@@ -5,7 +5,6 @@ import med.voli.api.domain.consulta.validacoes.ValidadorAgendamentoDeConsulta;
 import med.voli.api.domain.medicos.Medico;
 import med.voli.api.domain.medicos.MedicoRepository;
 import med.voli.api.domain.pacientes.PacienteRepository;
-import med.voli.api.usuario.DadosAutenticacaoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +41,10 @@ public class AgendamentoDeConsultas {
 
         var medico = escolherMedico(dadosAgendamentoConsultaDto);
         var paciente = pacienteRepository.getReferenceById(dadosAgendamentoConsultaDto.idPaciente());
+        if(medico==null){
+            throw new ValidacaoException("Nao ha nenhum medico disponivel nessa data!");
+
+        }
 
         var consulta = new Consulta(null, medico, paciente, dadosAgendamentoConsultaDto.data(), null);
         consultaRepository.save(consulta);
@@ -59,10 +62,6 @@ public class AgendamentoDeConsultas {
             throw new ValidacaoException("O preenchimento do campo 'Motivo' é obrigatório");
         }
 
-        if(!verificarAntedecendia24Horas(dadosCancelamentoConsultaDto)){
-            throw new ValidacaoException("A consulta só pode ser cancelada com no mínimo 24 horas de antecedência!");
-        }
-
         var consulta = consultaRepository.getReferenceById(dadosCancelamentoConsultaDto.idConsulta());
         consulta.cancelar(dadosCancelamentoConsultaDto.motivo());
     }
@@ -77,15 +76,5 @@ public class AgendamentoDeConsultas {
         }
 
         return medicoRepository.escolherMedicoAleatorioLivreNaData(dadosAgendamentoConsultaDto.especialidade(), dadosAgendamentoConsultaDto.data());
-    }
-
-    private boolean verificarAntedecendia24Horas(DadosCancelamentoConsultaDto dadosCancelamentoConsultaDto) {
-
-        var consulta = consultaRepository.getReferenceById(dadosCancelamentoConsultaDto.idConsulta());
-
-        if(consulta.getData().isAfter(LocalDateTime.now().plusHours(24))){
-            return false;
-        }
-        return true;
     }
 }
