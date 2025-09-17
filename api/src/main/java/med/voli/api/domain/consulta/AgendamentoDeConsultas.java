@@ -2,6 +2,7 @@ package med.voli.api.domain.consulta;
 
 import med.voli.api.domain.ValidacaoException;
 import med.voli.api.domain.consulta.validacoes.ValidadorAgendamentoDeConsulta;
+import med.voli.api.domain.consulta.validacoes.ValidadorCancelamentoDeConsulta;
 import med.voli.api.domain.medicos.Medico;
 import med.voli.api.domain.medicos.MedicoRepository;
 import med.voli.api.domain.pacientes.PacienteRepository;
@@ -24,7 +25,10 @@ public class AgendamentoDeConsultas {
     private PacienteRepository pacienteRepository;
 
     @Autowired
-    private List<ValidadorAgendamentoDeConsulta> validadores;
+    private List<ValidadorAgendamentoDeConsulta> validadoresAgendamentoDeConsultas;
+
+    @Autowired
+    private List<ValidadorCancelamentoDeConsulta> validadoresCancelamentoDeConsultas;
 
     public DadosDetalhamentoConsultaDto agendar(DadosAgendamentoConsultaDto dadosAgendamentoConsultaDto) {
 
@@ -37,7 +41,7 @@ public class AgendamentoDeConsultas {
             throw new ValidacaoException("Id do paciente informado não existe!");
         }
 
-        validadores.forEach(v -> v.validar(dadosAgendamentoConsultaDto));
+        validadoresAgendamentoDeConsultas.forEach(v -> v.validar(dadosAgendamentoConsultaDto));
 
         var medico = escolherMedico(dadosAgendamentoConsultaDto);
         var paciente = pacienteRepository.getReferenceById(dadosAgendamentoConsultaDto.idPaciente());
@@ -58,9 +62,7 @@ public class AgendamentoDeConsultas {
             throw new ValidacaoException("Id da consulta informada não existe!");
         }
 
-        if(dadosCancelamentoConsultaDto.motivo() == null){
-            throw new ValidacaoException("O preenchimento do campo 'Motivo' é obrigatório");
-        }
+        validadoresCancelamentoDeConsultas.forEach(v -> v.validar(dadosCancelamentoConsultaDto));
 
         var consulta = consultaRepository.getReferenceById(dadosCancelamentoConsultaDto.idConsulta());
         consulta.cancelar(dadosCancelamentoConsultaDto.motivo());
