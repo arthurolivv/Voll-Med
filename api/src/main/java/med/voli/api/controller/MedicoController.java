@@ -1,5 +1,6 @@
 package med.voli.api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voli.api.domain.medicos.*;
@@ -13,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/medicos")
+@SecurityRequirement(name = "bearer-key") //definir q a classe e restrita pro spring doc
 public class MedicoController {
 
     @Autowired

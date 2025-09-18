@@ -1,4 +1,4 @@
-package med.voli.api.usuario;
+package med.voli.api.domain.usuario;
 
 public record DadosAutenticacaoDto(
         String login,

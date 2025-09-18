@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import med.voli.api.domain.usuario.Usuario;
 import med.voli.api.infra.security.DadosTokenJwtDto;
 import med.voli.api.infra.security.TokenService;
-import med.voli.api.usuario.DadosAutenticacaoDto;
+import med.voli.api.domain.usuario.DadosAutenticacaoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

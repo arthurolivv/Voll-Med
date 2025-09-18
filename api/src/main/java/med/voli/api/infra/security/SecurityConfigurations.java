@@ -30,6 +30,7 @@ public class SecurityConfigurations {
                         .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                         .authorizeHttpRequests(req -> {
                             req.requestMatchers("/login").permitAll(); //liberar o post para essa url sem estar autenticado
+                            req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
                             req.anyRequest().authenticated(); //qualquer outra requisicao precisa bloquear para token
                         })
                         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
